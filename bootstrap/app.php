@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // Sanctum SPA auth: session cookies + CSRF for first-party requests.
         $middleware->statefulApi();
 
+        // On Vercel, HTTPS ends at Vercel's proxy; trust its X-Forwarded-* headers so
+        // generated URLs (e.g. Vite assets) use https instead of being blocked as mixed content.
+        if (getenv('VERCEL')) {
+            $middleware->trustProxies(at: '*');
+        }
+
         $middleware->append(SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
