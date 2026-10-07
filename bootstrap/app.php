@@ -25,6 +25,14 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
 
+        // Vercel splits long log entries, which buries the cause under the stack trace;
+        // also write a one-line summary there. Normal logging continues after this.
+        $exceptions->report(function (Throwable $e) {
+            if (getenv('VERCEL')) {
+                error_log('ERROR SUMMARY: '.get_class($e).': '.str_replace(["\r", "\n"], ' ', $e->getMessage()));
+            }
+        });
+
         // Surface FK violations and stored-procedure SIGNALs as clean 4xx errors.
         $exceptions->render(function (QueryException $e, Request $request) {
             if (! $request->is('api/*')) {
