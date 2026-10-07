@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a2fc4"/>
+      <stop offset="1" stop-color="#e0458f"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 2 L59 10 V29 C59 45.5 47.5 56.5 32 62 C16.5 56.5 5 45.5 5 29 V10 Z" fill="url(#g)"/>
+  <g font-family="Inter, 'Segoe UI', Arial, Helvetica, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle">
+    <text x="32" y="31" font-size="17" textLength="44" lengthAdjust="spacingAndGlyphs">RBEL</text>
+    <text x="32" y="46" font-size="12" textLength="28" lengthAdjust="spacingAndGlyphs">CRM</text>
+  </g>
+</svg>

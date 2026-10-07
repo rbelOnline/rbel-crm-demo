@@ -1,0 +1,225 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.{ts,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * RBEL-CRM design tokens (shadcn/ui variables).
+ * Purple primary with pink accents on softly purple-tinted neutrals.
+ */
+:root {
+    --radius: 0.7rem;
+    --background: oklch(0.985 0.006 320);
+    --foreground: oklch(0.24 0.04 300);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.24 0.04 300);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.24 0.04 300);
+    --primary: oklch(0.5 0.2 300);
+    --primary-foreground: oklch(0.985 0.01 320);
+    --secondary: oklch(0.955 0.018 320);
+    --secondary-foreground: oklch(0.32 0.06 300);
+    --muted: oklch(0.962 0.01 320);
+    --muted-foreground: oklch(0.52 0.035 305);
+    --accent: oklch(0.95 0.035 350);
+    --accent-foreground: oklch(0.45 0.17 350);
+    --destructive: oklch(0.58 0.2 25);
+    --border: oklch(0.915 0.016 320);
+    --input: oklch(0.9 0.018 320);
+    --ring: oklch(0.65 0.19 345);
+    --success: oklch(0.6 0.13 155);
+    --warning: oklch(0.75 0.14 75);
+    --brand-gradient: linear-gradient(135deg, oklch(0.5 0.2 300), oklch(0.62 0.21 350));
+
+    /* Categorical chart palette: dataviz reference order, validated for CVD in both modes. */
+    --chart-1: #8b3fd1;
+    --chart-2: #eb6834;
+    --chart-3: #1baf7a;
+    --chart-4: #eda100;
+    --chart-5: #e0559a;
+    --chart-6: #008300;
+    --chart-7: #2a78d6;
+    --chart-8: #e34948;
+    /* Sequential ramp: light pink to deep purple. */
+    --seq-1: #fbd3e6;
+    --seq-2: #f2a8d0;
+    --seq-3: #e07fc0;
+    --seq-4: #c75cb5;
+    --seq-5: #a443ab;
+    --seq-6: #7e339b;
+    --seq-7: #5a2580;
+
+    --sidebar: oklch(0.99 0.006 320);
+    --sidebar-foreground: oklch(0.3 0.04 300);
+    --sidebar-primary: oklch(0.5 0.2 300);
+    --sidebar-primary-foreground: oklch(0.985 0.01 320);
+    --sidebar-accent: oklch(0.95 0.035 345);
+    --sidebar-accent-foreground: oklch(0.42 0.16 340);
+    --sidebar-border: oklch(0.925 0.016 320);
+    --sidebar-ring: oklch(0.65 0.19 345);
+}
+
+.dark {
+    --background: oklch(0.17 0.025 300);
+    --foreground: oklch(0.95 0.01 320);
+    --card: oklch(0.21 0.03 300);
+    --card-foreground: oklch(0.95 0.01 320);
+    --popover: oklch(0.22 0.03 300);
+    --popover-foreground: oklch(0.95 0.01 320);
+    --primary: oklch(0.74 0.15 305);
+    --primary-foreground: oklch(0.2 0.05 300);
+    --secondary: oklch(0.27 0.03 300);
+    --secondary-foreground: oklch(0.93 0.01 320);
+    --muted: oklch(0.26 0.028 300);
+    --muted-foreground: oklch(0.72 0.03 310);
+    --accent: oklch(0.3 0.06 340);
+    --accent-foreground: oklch(0.9 0.07 350);
+    --destructive: oklch(0.68 0.19 22);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 14%);
+    --ring: oklch(0.72 0.16 350);
+    --success: oklch(0.7 0.13 155);
+    --warning: oklch(0.8 0.13 80);
+    --brand-gradient: linear-gradient(135deg, oklch(0.55 0.2 300), oklch(0.64 0.2 350));
+
+    --chart-1: #b07ef0;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
+    --chart-4: #c98500;
+    --chart-5: #e66aa8;
+    --chart-6: #008300;
+    --chart-7: #3987e5;
+    --chart-8: #e66767;
+    --seq-1: #4a1f5c;
+    --seq-2: #632a78;
+    --seq-3: #803592;
+    --seq-4: #a043a6;
+    --seq-5: #c15bb5;
+    --seq-6: #db80c6;
+    --seq-7: #f0abd9;
+
+    --sidebar: oklch(0.19 0.028 300);
+    --sidebar-foreground: oklch(0.9 0.015 320);
+    --sidebar-primary: oklch(0.74 0.15 305);
+    --sidebar-primary-foreground: oklch(0.2 0.05 300);
+    --sidebar-accent: oklch(0.28 0.055 335);
+    --sidebar-accent-foreground: oklch(0.92 0.06 350);
+    --sidebar-border: oklch(1 0 0 / 8%);
+    --sidebar-ring: oklch(0.72 0.16 350);
+}
+
+@theme inline {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Segoe UI Emoji';
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-feature-settings: 'cv11', 'ss01';
+    }
+
+    /* Cards inside grids must be allowed to shrink so inner tables scroll instead of widening the page. */
+    [data-slot='card'] {
+        min-width: 0;
+    }
+
+    /* Purple-to-pink brand fill for the logo mark and login panel. */
+    .bg-brand {
+        background-image: var(--brand-gradient);
+    }
+
+    .tabular {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+/*
+ * Document editor: an A4 "paper" page. Always light, like printed paper, in both themes.
+ * Tailwind's preflight removes list/heading styles, so they are restored here.
+ */
+@layer components {
+    .doc-page {
+        width: 210mm;
+        max-width: 100%;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 20mm;
+        background: #ffffff;
+        color: #111827;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 8px 24px rgb(0 0 0 / 0.08);
+        font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif;
+        font-size: 11pt;
+        line-height: 1.45;
+    }
+    @media (max-width: 640px) {
+        .doc-page { padding: 8mm; min-height: 0; }
+    }
+    .doc-page .ProseMirror { outline: none; min-height: 240mm; }
+    .doc-page p { margin: 0 0 0.6em; }
+    .doc-page h1 { font-size: 20pt; font-weight: 700; margin: 0.6em 0 0.4em; }
+    .doc-page h2 { font-size: 16pt; font-weight: 700; margin: 0.6em 0 0.4em; }
+    .doc-page h3 { font-size: 13pt; font-weight: 700; margin: 0.6em 0 0.4em; }
+    .doc-page ul { list-style: disc; padding-left: 1.6em; margin: 0 0 0.6em; }
+    .doc-page ol { list-style: decimal; padding-left: 1.6em; margin: 0 0 0.6em; }
+    .doc-page li > p { margin: 0; }
+    .doc-page blockquote { border-left: 3px solid #d1d5db; padding-left: 1em; color: #4b5563; }
+    .doc-page hr { border: 0; border-top: 1px solid #d1d5db; margin: 1em 0; }
+    .doc-page img { max-width: 100%; height: auto; display: inline-block; }
+    .doc-page img.ProseMirror-selectednode { outline: 2px solid #0d9488; }
+    .doc-page table { border-collapse: collapse; width: 100%; margin: 0 0 0.8em; table-layout: fixed; }
+    .doc-page td, .doc-page th { border: 1px solid #9ca3af; padding: 4px 6px; vertical-align: top; position: relative; }
+    .doc-page th { background: #f3f4f6; font-weight: 700; }
+    .doc-page .selectedCell::after { content: ''; position: absolute; inset: 0; background: rgb(13 148 136 / 0.15); pointer-events: none; }
+    .doc-page .column-resize-handle { position: absolute; right: -2px; top: 0; bottom: 0; width: 4px; background: #0d9488; pointer-events: none; }
+    .doc-page mark { background: #fef08a; color: inherit; }
+    /* Placeholders that are still unfilled ({{owner_address}}). */
+    .doc-page .doc-placeholder { background: #fef3c7; outline: 1px dashed #d97706; border-radius: 2px; color: #92400e; }
+}
+
+@media print {
+    .doc-page { box-shadow: none; padding: 0; width: auto; min-height: 0; }
+}

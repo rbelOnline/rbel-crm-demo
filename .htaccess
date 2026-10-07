@@ -1,0 +1,5 @@
+# The project sits inside WAMP's web root (c:\wamp64\www). Without this file Apache
+# would serve .env, storage/ (client documents, logs) and the source code at
+# http://localhost/rbel-crm/... The app is served from public/ by `php artisan serve`
+# (start-crm.bat), so nothing here should ever be reachable through Apache.
+Require all denied
