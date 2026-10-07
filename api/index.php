@@ -38,6 +38,14 @@ if (parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) === '/up/db') {
         echo 'clients: '.$pdo->query('SELECT COUNT(*) FROM clients')->fetchColumn()."\n";
     } catch (Throwable $e) {
         echo 'connection: FAILED - '.substr(str_replace(getenv('DB_PASSWORD') ?: "\0", '***', $e->getMessage()), 0, 300)."\n";
+        try {
+            $server = new PDO('mysql:host='.getenv('DB_HOST').';port='.getenv('DB_PORT'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'),
+                $caPath !== '' ? [PDO::MYSQL_ATTR_SSL_CA => $caPath] : []);
+            foreach ($server->query("SELECT s.schema_name, (SELECT COUNT(*) FROM information_schema.tables t WHERE t.table_schema = s.schema_name) FROM information_schema.schemata s WHERE s.schema_name NOT IN ('mysql','sys','information_schema','performance_schema')")->fetchAll(PDO::FETCH_NUM) as [$name, $tables]) {
+                echo "database on server: {$name} ({$tables} tables)\n";
+            }
+        } catch (Throwable) {
+        }
     }
     exit;
 }
