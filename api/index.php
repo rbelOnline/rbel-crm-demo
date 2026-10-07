@@ -43,6 +43,14 @@ if (parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) === '/up/db') {
                 $caPath !== '' ? [PDO::MYSQL_ATTR_SSL_CA => $caPath] : []);
             foreach ($server->query("SELECT s.schema_name, (SELECT COUNT(*) FROM information_schema.tables t WHERE t.table_schema = s.schema_name) FROM information_schema.schemata s WHERE s.schema_name NOT IN ('mysql','sys','information_schema','performance_schema')")->fetchAll(PDO::FETCH_NUM) as [$name, $tables]) {
                 echo "database on server: {$name} ({$tables} tables)\n";
+                $names[$name] = $server->query('SELECT table_name FROM information_schema.tables WHERE table_schema = '.$server->quote($name))->fetchAll(PDO::FETCH_COLUMN);
+            }
+            if (isset($names['defaultdb'], $names['rbel_crm_demo'])) {
+                echo 'only in defaultdb: '.implode(', ', array_diff($names['defaultdb'], $names['rbel_crm_demo']))."\n";
+                echo 'only in rbel_crm_demo: '.implode(', ', array_diff($names['rbel_crm_demo'], $names['defaultdb']))."\n";
+                $c = $server->query('SELECT COUNT(*) FROM rbel_crm_demo.clients')->fetchColumn();
+                $p = $server->query('SELECT COUNT(*) FROM rbel_crm_demo.policies')->fetchColumn();
+                echo "rbel_crm_demo rows: {$c} clients, {$p} policies\n";
             }
         } catch (Throwable) {
         }
