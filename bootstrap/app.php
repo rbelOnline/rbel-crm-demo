@@ -48,7 +48,8 @@ return Application::configure(basePath: dirname(__DIR__))
             return match ($e->errorInfo[1] ?? null) {
                 1451 => response()->json(['message' => 'This record is still referenced by other records and cannot be removed.'], 409),
                 1644 => response()->json(['message' => $e->errorInfo[2] ?? 'Invalid analytics request.'], 422),
-                default => null,
+                // TEMPORARY (Vercel deploy check): show the MySQL error code and driver message.
+                default => getenv('VERCEL') ? response()->json(['message' => 'Server Error', 'db_error' => [$e->errorInfo[1] ?? null, $e->errorInfo[2] ?? null]], 500) : null,
             };
         });
     })->create();
